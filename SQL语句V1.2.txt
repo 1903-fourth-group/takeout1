@@ -1,0 +1,101 @@
+
+//修改MySQL密码为统一的123456
+set password for root@localhost = password('123456');
+
+//创建数据库
+CREATE DATABASE `takeout` ；
+
+//创建管理员表
+CREATE TABLE `admin_info` (
+  `admin_id` int(11) NOT NULL auto_increment,
+  `admin_name` varchar(16) default NULL,
+  `admin_password` varchar(20) default NULL,
+  PRIMARY KEY  (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+//创建用户表
+CREATE TABLE `user_info` (
+  `user_id` int(11) NOT NULL auto_increment,
+  `via` varchar(40) default NULL,
+  `user_name` varchar(16) default NULL,
+  `user_password` varchar(16) default NULL,
+  `phone` varchar(16) default NULL,
+  `address` varchar(40) default NULL,
+  `user_email` varchar(20) default NULL,
+  `balance` double default NULL,
+  PRIMARY KEY  (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+
+//创建商家分类表
+CREATE TABLE `business_type` (
+  `bus_type_id` int(11) NOT NULL auto_increment,
+  `bus_type_pid` int(11) default NULL,
+  `bus_type_name` varchar(40) default NULL,
+  PRIMARY KEY  (`bus_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8
+
+//创建商家表
+CREATE TABLE `business_info` (
+  `bus_id` int(11) NOT NULL auto_increment,
+  `bus_name` varchar(16) default NULL,
+  `bus_img` varchar(40) default NULL,
+  `bus_address` varchar(40) default NULL,
+  `bus_sales_permonth` double default NULL,
+  `min_delivery` double default NULL,
+  `delivery_cost_day` double default NULL,
+  `delivery_cost_night` double default NULL,
+  `consume_per_head` double default NULL,
+  `debit` int(11) default NULL,
+  `distance` double default NULL,
+  `delivery_time` int(11) default NULL,
+  `bus_bustype` int(11) default NULL,
+  PRIMARY KEY  (`bus_id`),
+  KEY `bi_bt` (`bus_bustype`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+//创建评价表
+CREATE TABLE `evaluation` (
+  `eva_id` int(11) NOT NULL,
+  `eva_order` int(11) default NULL,
+  `eva_detail` varchar(200) default NULL,
+  `eva_grade` int(11) default NULL,
+  `eva_img` varchar(40) default NULL,
+  PRIMARY KEY  (`eva_id`),
+  KEY `e_b` (`eva_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+//创建商品表
+CREATE TABLE `commodity_info` (
+  `com_id` int(11) NOT NULL auto_increment,
+  `com_name` varchar(16) default NULL,
+  `com_img` varchar(40) default NULL,
+  `com_price` double default NULL,
+  `com_sales_permonth` int(11) default NULL,
+  `com_bus` int(11) default NULL,
+  PRIMARY KEY  (`com_id`),
+  KEY `c_b` (`com_bus`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+//创建订单表
+
+CREATE TABLE `shopping_order` (
+  `order_id` int(11) NOT NULL,
+  `order_busniess` int(11) default NULL,
+  `current_user` varchar(16) default NULL,
+  `order_address` varchar(40) default NULL,
+  `order_phone` int(11) default NULL,
+  `total_price` double default NULL,
+  `order_time` date default NULL,
+  `order_state` int(11) default NULL,
+  `user_id` int(11) default NULL,
+  PRIMARY KEY  (`order_id`),
+  KEY `o_u` (`user_id`),
+  KEY `o_c` (`order_busniess`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+//创建当前订单
+CREATE TABLE `order_business` (
+  `order_id` int(11) default NULL,
+  `commodity_id` int(11) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
