@@ -2,46 +2,53 @@ package com.hellojava.controller;
 
 
 import com.hellojava.entity.User;
+import com.hellojava.response.QueryResponseResult;
 import com.hellojava.service.UserService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@ResponseBody
+@RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @ResponseBody
-    @RequestMapping(value = "/checkLogin/{userName}/{userPassword}",method = RequestMethod.GET)
-    @ApiOperation (value = "登录验证")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "userName", value = "用户名", required = true, dataType = "String") ,
-            @ApiImplicitParam(paramType = "query", name = "userPassword", value = "密码", required = true, dataType = "String") ,
-    })
-    public Integer checkLogin(@RequestParam("userName") String userName, @RequestParam("userPassword")String userPassword){
-        System.out.println (userName+"+"+userPassword);
-        int res = userService.checkLogin (userName,userPassword);
-        return res;
+    @RequestMapping(value = "/findAll",method = RequestMethod.GET)
+    @ApiOperation("查询所有")
+    public QueryResponseResult findAll() {
+        QueryResponseResult all = userService.findAll();
+        return all;
     }
-
-    @ResponseBody
-    @RequestMapping(value = "/loadAll",method = RequestMethod.GET)
-    @ApiOperation (value = "查询所有用户信息")
-    public List<User> loadAll(){
-        List<User> userList = userService.loadAll ();
-        return userList;
+//    登录
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @ApiOperation("登录")
+    public QueryResponseResult loginUser(User user){
+//        if(user.getUserName()!=null&&user.getUserPassword()!=null){
+//            userService.findOneByUser(user);
+//            return 1;
+//        }else {
+//            return 0;
+//        }
+        QueryResponseResult oneByUser = userService.findOneByUser(user);
+        return oneByUser;
     }
-
-    @RequestMapping(value = "index",method = RequestMethod.GET)
-    @ApiOperation("测试")
-    public void loadsAll(){
-        System.out.println(11111);
+//    注册
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @ApiOperation("注册")
+    public QueryResponseResult registerUser(User user) {
+//        if(user.getUserName()!=null && user.getUserPassword()!=null && user.getUserEmail()!=null){
+//            userService.addUser(user);
+//            return "1";
+//        }else {
+//            return "0";
+//        }
+        QueryResponseResult addUser = userService.addUser(user);
+        return addUser;
     }
 }

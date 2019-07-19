@@ -18,7 +18,7 @@ public class Business implements Serializable {
     @Column(name = "bus_img")
     private String busImg;
     @Column(name = "bus_address")
-    private int busAddress;
+    private String busAddress;
     @Column(name = "bus_sales_permonth")
     private double busSalesPerMonth;
     @Column(name = "min_delivery")

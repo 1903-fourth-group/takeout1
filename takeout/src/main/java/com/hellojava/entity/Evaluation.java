@@ -14,12 +14,12 @@ public class Evaluation implements Serializable {
     @Column(name = "eva_id")
     private int evaId;
     @Column(name = "eva_order")
-    private int evaOrder;
+    private String evaOrder;
     @Column(name = "eva_detail")
-    private int evaDetail;
+    private String evaDetail;
     @Column(name = "eva_grade")
     private int evaGrade;
     @Column(name = "eva_img")
-    private int evaImg;
+    private String evaImg;
 
 }
