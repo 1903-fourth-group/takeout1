@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "shopping_order")
 public class Order implements Serializable {
+    @Id
     @Column(name = "order_id")
     private String orderId;
     @Column(name = "order_business")

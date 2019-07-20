@@ -18,14 +18,13 @@ import java.util.List;
 import java.util.Random;
 
 @Controller
-@RequestMapping("order")
+@RequestMapping("/order")
 public class OderController {
     @Autowired
     private OrderShoppingService orderShoppingService;
+
     @ResponseBody
     @RequestMapping(value = "insertorder",method = RequestMethod.POST)
-
-
     public void insertorder(@RequestBody Order shoppingOrder, HttpServletRequest request){
         String orderid = "";
         Random random = new Random();
@@ -39,11 +38,10 @@ public class OderController {
         shoppingOrder.setOrderId(orderid);
         orderShoppingService.insertOrder(shoppingOrder);
         request.getSession().setAttribute("orderid",orderid);
-
     }
 
     @ResponseBody
-    @RequestMapping("state")
+    @RequestMapping("/state")
     @Scheduled(fixedRate = 6000)
     public void  state(){
        Long minutes=null;
